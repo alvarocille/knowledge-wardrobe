@@ -12,23 +12,31 @@ public class usuarioDAO {
 
     public static void conectar() throws ClassNotFoundException, SQLException, IOException {
         Properties configuration = new Properties();
-        configuration.load(R.getProperties("database.properties"));
-        String host = configuration.getProperty("host");
-        String port = configuration.getProperty("port");
-        String name = configuration.getProperty("name");
-        String username = configuration.getProperty("username");
-        String password = configuration.getProperty("password");
-
-        Class.forName("com.mysql.cj.jdbc.Driver");
-        conexion = DriverManager.getConnection("jdbc:mysql://" + host + ":" + port + "/" + name + "?serverTimezone=UTC",
-                username, password);
+        String host = "", port = "", name = "", username = "", password = "";
+        try {
+            configuration.load(R.getProperties("database.properties"));
+            host = configuration.getProperty("host");
+            port = configuration.getProperty("port");
+            name = configuration.getProperty("name");
+            username = configuration.getProperty("username");
+            password = configuration.getProperty("password");
+        } catch (Exception e) {
+            System.out.println("Error al cargar los datos de conexión:" + e);
+        }
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            conexion = DriverManager.getConnection("jdbc:mysql://" + host + ":" + port + "/" + name + "?serverTimezone=UTC",
+                    username, password);
+        } catch (Exception e) {
+            System.out.println("Error al conectar con la base de datos:" + e);
+        }
     }
 
     public void desconectar() throws SQLException {
         conexion.close();
     }
 
-    public void registrarUsuario(Usuario usuario) throws SQLException {
+    public static void registrarUsuario(Usuario usuario) throws SQLException {
         String sql = "INSERT INTO usuario (idUsuario, nombre, password, email) VALUES (?, ?, ?, ?)";
 
         PreparedStatement sentencia = conexion.prepareStatement(sql);
@@ -39,7 +47,7 @@ public class usuarioDAO {
         sentencia.executeUpdate();
     }
 
-    public void iniciarSesion(String nombre, String password) throws SQLException {
+    public static Usuario buscarUsuario(String nombre, String password) throws SQLException {
         String sql = "SELECT * FROM usuario WHERE nombre = ? AND password = ?";
         PreparedStatement sentencia = conexion.prepareStatement(sql);
         sentencia.setString(1, nombre);
@@ -47,7 +55,16 @@ public class usuarioDAO {
 
         ResultSet resultado = sentencia.executeQuery();
 
-        print(resultado);
+        if (resultado.next()) {
+            int idUsuario = resultado.getInt("idUsuario");
+            String nombreUsuario = resultado.getString("nombre");
+            String passwordUsuario = resultado.getString("password");
+            String email = resultado.getString("email");
+
+            return new Usuario(idUsuario, nombreUsuario, passwordUsuario, email);
+        } else {
+            return null;
+        }
     }
 
 

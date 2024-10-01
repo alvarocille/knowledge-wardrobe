@@ -1,10 +1,10 @@
-DROP DATABASE IF EXISTS Armario;
-CREATE DATABASE Armario;
-Use Armario;
+DROP DATABASE IF EXISTS armario;
+CREATE DATABASE armario;
+Use armario;
 
 
 CREATE TABLE Usuario(
-Id int unsigned auto_increment primary key,
+idUsuario int unsigned auto_increment primary key,
 Nombre varchar(32),
 Password varchar(64),
 Email varchar(32)
