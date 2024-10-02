@@ -1,13 +1,15 @@
 package acceso.dam.proyectosql;
 
 import acceso.dam.proyectosql.util.R;
+import acceso.dam.proyectosql.Controlador.*;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-import java.io.IOException;
+import java.util.Objects;
 
 public class Main extends Application {
 
@@ -18,11 +20,14 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        InicioControlador controller = new InicioControlador();
+        Image icono = new Image(Objects.requireNonNull(R.getImage("icono.png")));
+        stage.getIcons().add(icono);
+
+        InicioControlador controladorInicio = new InicioControlador(icono);
 
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(R.getUI("inicio.fxml"));
-        loader.setController(controller);
+        loader.setController(controladorInicio);
         VBox vbox = loader.load();
 
         Scene scene = new Scene(vbox);

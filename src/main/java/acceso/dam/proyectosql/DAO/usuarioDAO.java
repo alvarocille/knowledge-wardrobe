@@ -36,14 +36,13 @@ public class usuarioDAO {
         conexion.close();
     }
 
-    public static void registrarUsuario(Usuario usuario) throws SQLException {
-        String sql = "INSERT INTO usuario (idUsuario, nombre, password, email) VALUES (?, ?, ?, ?)";
+    public static void insertarUsuario(Usuario usuario) throws SQLException {
+        String sql = "INSERT INTO usuario (nombre, password, email) VALUES (?, ?, ?)";
 
         PreparedStatement sentencia = conexion.prepareStatement(sql);
-        sentencia.setString(1, String.valueOf(usuario.getIdUsuario()));
-        sentencia.setString(2, usuario.getNombre());
-        sentencia.setString(3, usuario.getPassword());
-        sentencia.setString(4, usuario.getEmail());
+        sentencia.setString(1, usuario.getNombre());
+        sentencia.setString(2, usuario.getPassword());
+        sentencia.setString(3, usuario.getEmail());
         sentencia.executeUpdate();
     }
 
