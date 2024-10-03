@@ -21,6 +21,7 @@ import java.util.Objects;
 import static acceso.dam.proyectosql.DAO.usuarioDAO.insertarUsuario;
 import static acceso.dam.proyectosql.util.AlertUtils.mostrarConfirmacion;
 import static acceso.dam.proyectosql.util.AlertUtils.mostrarError;
+import static acceso.dam.proyectosql.util.BD.conectar;
 import static acceso.dam.proyectosql.util.Utils.cambiarVisibilidad;
 
 public class RegistroControlador {
@@ -33,18 +34,15 @@ public class RegistroControlador {
     @FXML
     private Button registroBtn, passwordBtn, password2Btn;
 
-    Image icono;
-
-    private InicioControlador controladorInicio;
+    private final InicioControlador controladorInicio;
     private boolean passwordVisible = false;
     private boolean passwordVisible2 = false;
 
-    public RegistroControlador(InicioControlador controladorInicio, Image icono) {
+    public RegistroControlador(InicioControlador controladorInicio) {
         this.controladorInicio = controladorInicio;
-        this.icono = icono;
 
         try {
-            usuarioDAO.conectar();
+            conectar();
         } catch (SQLException sqle) {
             mostrarError("Error al conectar con la base de datos");
         } catch (ClassNotFoundException cnfe) {
