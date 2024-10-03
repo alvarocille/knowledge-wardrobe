@@ -1,7 +1,5 @@
-package acceso.dam.proyectosql;
+package acceso.dam.proyectosql.Controlador;
 
-import acceso.dam.proyectosql.Controlador.ArmarioControlador;
-import acceso.dam.proyectosql.Controlador.RegistroControlador;
 import acceso.dam.proyectosql.DAO.usuarioDAO;
 import acceso.dam.proyectosql.domain.Usuario;
 import acceso.dam.proyectosql.util.AlertUtils;
@@ -82,6 +80,7 @@ public class InicioControlador {
 
                 Stage currentStage = (Stage) loginBtn.getScene().getWindow();
                 Scene scene = new Scene(vbox);
+                scene.getStylesheets().add(R.getEstilos("estilos.css").toExternalForm());
                 currentStage.setScene(scene);
                 currentStage.show();
 
@@ -105,6 +104,7 @@ public class InicioControlador {
 
             Stage stage = new Stage();
             Scene scene = new Scene(vbox);
+            scene.getStylesheets().add(R.getEstilos("estilos.css").toExternalForm());
             stage.setScene(scene);
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.showAndWait();

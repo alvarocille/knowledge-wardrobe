@@ -1,0 +1,18 @@
+.fuente-base {
+    -fx-font-family: "Georgia Pro";
+}
+
+.placeholder {
+    -fx-font-family: "Georgia Pro";
+}
+
+.texto-destacado {
+    -fx-font-family: "Georgia Pro Black";
+    -fx-font-style: italic;
+    -fx-font-size: 20px;
+}
+
+.boton-destacado {
+    -fx-font-family: "Georgia Pro";
+    -fx-font-size: 20px;
+}

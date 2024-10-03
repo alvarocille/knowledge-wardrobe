@@ -1,13 +1,10 @@
 package acceso.dam.proyectosql.Controlador;
 
 import acceso.dam.proyectosql.DAO.usuarioDAO;
-import acceso.dam.proyectosql.InicioControlador;
 import acceso.dam.proyectosql.domain.Usuario;
-import acceso.dam.proyectosql.util.AlertUtils;
 import acceso.dam.proyectosql.util.R;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -35,7 +32,7 @@ public class RegistroControlador {
 
     Image icono;
 
-    private InicioControlador controladorInicio;
+    private final InicioControlador controladorInicio;
     private boolean passwordVisible = false;
     private boolean passwordVisible2 = false;
 

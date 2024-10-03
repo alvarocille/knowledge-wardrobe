@@ -31,6 +31,7 @@ public class Main extends Application {
         VBox vbox = loader.load();
 
         Scene scene = new Scene(vbox);
+        scene.getStylesheets().add(R.getEstilos("estilos.css").toExternalForm());
         stage.setScene(scene);
         stage.show();
     }
