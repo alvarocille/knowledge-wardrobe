@@ -2,9 +2,7 @@ package acceso.dam.proyectosql;
 
 import acceso.dam.proyectosql.Controlador.ArmarioControlador;
 import acceso.dam.proyectosql.Controlador.RegistroControlador;
-import acceso.dam.proyectosql.DAO.usuarioDAO;
 import acceso.dam.proyectosql.domain.Usuario;
-import acceso.dam.proyectosql.util.AlertUtils;
 import acceso.dam.proyectosql.util.R;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -18,10 +16,12 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Objects;
 
 import static acceso.dam.proyectosql.DAO.usuarioDAO.buscarUsuario;
+import static acceso.dam.proyectosql.util.BD.conectar;
 import static acceso.dam.proyectosql.util.Utils.cambiarVisibilidad;
 
 public class InicioControlador {
@@ -43,16 +43,6 @@ public class InicioControlador {
 
     public InicioControlador(Image icono) {
         this.icono = icono;
-        try {
-            usuarioDAO.conectar();
-        } catch (SQLException sqle) {
-            AlertUtils.mostrarError("Error al conectar con la base de datos");
-        } catch (ClassNotFoundException cnfe) {
-            AlertUtils.mostrarError("Error al iniciar la aplicación");
-        } catch (IOException ioe) {
-            AlertUtils.mostrarError("Error al cargar la configuración");
-        }
-        System.out.println(System.getProperty("user.home"));
     }
 
     @FXML
@@ -68,35 +58,39 @@ public class InicioControlador {
         if (tfPasswordVisible.isVisible()) {
             tfPassword.setText(tfPasswordVisible.getText());
         }
-        Usuario usuario = buscarUsuario(tfUser.getText(), tfPassword.getText());
-        notFound.setVisible(false);
-        limpiarCampos();
-        if (usuario != null) {
-            try {
-                ArmarioControlador controller = new ArmarioControlador();
+        if (!tfPassword.getText().isEmpty() && !tfUser.getText().isEmpty()) {
+            Usuario usuario = buscarUsuario(tfUser.getText(), tfPassword.getText());
+            notFound.setVisible(false);
+            limpiarCampos();
+            if (usuario != null) {
+                try {
+                    ArmarioControlador controladorArmario = new ArmarioControlador();
 
-                FXMLLoader loader = new FXMLLoader();
-                loader.setLocation(R.getUI("armario.fxml"));
-                loader.setController(controller);
-                VBox vbox = loader.load();
+                    FXMLLoader loader = new FXMLLoader();
+                    loader.setLocation(R.getUI("armario.fxml"));
+                    loader.setController(controladorArmario);
+                    VBox vbox = loader.load();
 
-                Stage currentStage = (Stage) loginBtn.getScene().getWindow();
-                Scene scene = new Scene(vbox);
-                currentStage.setScene(scene);
-                currentStage.show();
+                    Stage currentStage = (Stage) loginBtn.getScene().getWindow();
+                    Scene scene = new Scene(vbox);
+                    controladorArmario.setUsuario(usuario);
+                    currentStage.setScene(scene);
+                    currentStage.show();
 
-            } catch (IOException e) {
-                System.out.println(e.getMessage());
+                } catch (IOException e) {
+                    System.out.println(e.getMessage());
+                }
+            } else {
+                notFound.setVisible(true);
             }
-        } else {
-            notFound.setVisible(true);
         }
+
     }
 
     @FXML
     protected void abrirRegistro(ActionEvent event) {
         try {
-            RegistroControlador controladorRegistro = new RegistroControlador(this, icono);
+            RegistroControlador controladorRegistro = new RegistroControlador(this);
 
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(R.getUI("registro.fxml"));
@@ -104,6 +98,7 @@ public class InicioControlador {
             VBox vbox = loader.load();
 
             Stage stage = new Stage();
+            stage.getIcons().add(icono);
             Scene scene = new Scene(vbox);
             stage.setScene(scene);
             stage.initModality(Modality.APPLICATION_MODAL);
