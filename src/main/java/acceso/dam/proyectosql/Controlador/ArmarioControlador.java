@@ -4,10 +4,8 @@ import acceso.dam.proyectosql.DAO.conocimientoDAO;
 import acceso.dam.proyectosql.domain.Conocimiento;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -18,7 +16,13 @@ import static acceso.dam.proyectosql.DAO.conocimientoDAO.cargarConocimiento;
 
 public class ArmarioControlador {
     @FXML
-    public ListView<Conocimiento> lvConocimientos;
+    public TableView<Conocimiento> tvConocimientos;
+    @FXML
+    private TableColumn<Conocimiento, String> colNombre;
+    @FXML
+    private TableColumn<Conocimiento, String> colDescripcion;
+    @FXML
+    private TableColumn<Conocimiento, Integer> colEstado;
     @FXML
     private TextField nombreTextField;
     @FXML
@@ -34,8 +38,16 @@ public class ArmarioControlador {
     @FXML
     public void initialize() throws SQLException, IOException, ClassNotFoundException {
         labelUsuario.setText("Conocimientos de " + nombreUsuario);
+        configurarColumnas();
         cargarDatos();
         cbEstado.setItems(FXCollections.observableArrayList("Aprendiendo...", "Principiante", "Dominado"));
+    }
+
+    @FXML
+    private void configurarColumnas() {
+        colNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+        colDescripcion.setCellValueFactory(new PropertyValueFactory<>("descripcion"));
+        colEstado.setCellValueFactory(new PropertyValueFactory<>("estado"));
     }
 
     @FXML
@@ -79,10 +91,10 @@ public class ArmarioControlador {
     }
 
     public void cargarDatos() {
-        lvConocimientos.getItems().clear();
+        tvConocimientos.getItems().clear();
         try {
             List<Conocimiento> conocimientos = cargarConocimiento(idUsuario);
-            lvConocimientos.setItems(FXCollections.observableList(conocimientos));
+            tvConocimientos.setItems(FXCollections.observableList(conocimientos));
         } catch (Exception e) {
             System.out.println("Error cargando los datos de la aplicación: " + e.getMessage());
         }
