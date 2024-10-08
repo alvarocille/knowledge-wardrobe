@@ -72,6 +72,7 @@ public class InicioControlador {
         if (usuario != null) {
             try {
                 ArmarioControlador controller = new ArmarioControlador();
+                controller.setUsuario(usuario.getNombre(), usuario.getIdUsuario());
 
                 FXMLLoader loader = new FXMLLoader();
                 loader.setLocation(R.getUI("armario.fxml"));

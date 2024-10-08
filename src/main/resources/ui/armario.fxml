@@ -6,25 +6,31 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <VBox alignment="CENTER" prefHeight="802.0" prefWidth="1129.0" spacing="20.0" stylesheets="@../styles/estilos.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
-    <Label styleClass="texto-destacado" text="Conocimientos del Usuario">
+    <Label fx:id="labelUsuario" styleClass="texto-destacado" text="Conocimientos del Usuario">
         <VBox.margin>
             <Insets top="20.0" />
         </VBox.margin>
     </Label>
-    <ListView fx:id="conocimientoListView" prefHeight="662.0" prefWidth="1129.0">
-    </ListView>
+   <ListView fx:id="lvConocimientos" prefHeight="746.0" prefWidth="1129.0" />
     <HBox alignment="CENTER" spacing="5">
         <TextField fx:id="nombreTextField" prefHeight="31.0" prefWidth="193.0" promptText="Nombre del conocimiento" styleClass="placeholder" />
-        <TextField fx:id="descripcionTextField" promptText="Descripción" styleClass="placeholder" />
-        <ComboBox prefWidth="150.0" promptText="Estado" styleClass="placeholder" />
+        <TextField fx:id="descripcionTextField" prefHeight="29.0" prefWidth="614.0" promptText="Descripción" styleClass="placeholder" />
+        <ComboBox fx:id="cbEstado" prefHeight="29.0" prefWidth="172.0" promptText="Estado" styleClass="placeholder" />
     </HBox>
-    <Button onAction="#agregarConocimiento" styleClass="boton-destacado" text="Añadir Conocimiento">
-        <VBox.margin>
-            <Insets bottom="15.0" />
-        </VBox.margin>
-    </Button>
+   <AnchorPane prefHeight="200.0" prefWidth="200.0">
+      <children>
+          <Button alignment="CENTER" contentDisplay="CENTER" layoutX="457.0" layoutY="3.0" onAction="#agregarConocimiento" styleClass="boton-destacado" text="Añadir Conocimiento" />
+         <Label fx:id="errorMsg" alignment="CENTER" contentDisplay="CENTER" layoutX="728.0" layoutY="13.0" text="Nombre, descripción o estado vacío." textAlignment="JUSTIFY" textFill="RED" visible="false">
+            <font>
+               <Font name="Georgia Pro" size="16.0" />
+            </font>
+         </Label>
+      </children>
+   </AnchorPane>
 </VBox>
