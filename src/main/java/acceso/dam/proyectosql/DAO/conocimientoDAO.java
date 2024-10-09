@@ -1,15 +1,12 @@
 package acceso.dam.proyectosql.DAO;
 
 import acceso.dam.proyectosql.domain.Conocimiento;
-import acceso.dam.proyectosql.domain.Usuario;
 import acceso.dam.proyectosql.util.R;
 
 import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Properties;
-
-import static acceso.dam.proyectosql.DAO.usuarioDAO.conectar;
 
 public class conocimientoDAO {
     private static Connection conexion;
@@ -39,9 +36,16 @@ public class conocimientoDAO {
     public static ArrayList<Conocimiento> cargarConocimiento(int idUsuario) throws SQLException, IOException, ClassNotFoundException {
         conectar();
         ArrayList<Conocimiento> conocimientos = new ArrayList<>();
-        String sql = "SELECT * FROM conocimiento WHERE idUsuario = ?";
-        PreparedStatement sentencia = conexion.prepareStatement(sql);
-        sentencia.setInt(1, idUsuario);
+        PreparedStatement sentencia;
+        if (idUsuario != 1) {
+            String sql = "SELECT * FROM conocimiento WHERE idUsuario = ?";
+            sentencia = conexion.prepareStatement(sql);
+            sentencia.setInt(1, idUsuario);
+        } else {
+            String sql = "SELECT * FROM conocimiento";
+            sentencia = conexion.prepareStatement(sql);
+        }
+
         ResultSet resultado = sentencia.executeQuery();
         
         while (resultado.next()) {

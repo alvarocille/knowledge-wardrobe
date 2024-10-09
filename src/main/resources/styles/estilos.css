@@ -16,3 +16,11 @@
     -fx-font-family: "Georgia Pro";
     -fx-font-size: 20px;
 }
+
+.table-view .table-column-header {
+    -fx-alignment: CENTER;
+}
+
+.table-view .table-cell {
+    -fx-alignment: CENTER;
+}

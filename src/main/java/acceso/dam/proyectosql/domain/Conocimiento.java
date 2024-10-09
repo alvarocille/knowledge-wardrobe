@@ -1,6 +1,9 @@
 package acceso.dam.proyectosql.domain;
 
-import java.sql.ResultSet;
+import acceso.dam.proyectosql.util.R;
+import javafx.scene.image.Image;
+
+import java.util.Objects;
 
 public class Conocimiento {
     private int idConocimiento;

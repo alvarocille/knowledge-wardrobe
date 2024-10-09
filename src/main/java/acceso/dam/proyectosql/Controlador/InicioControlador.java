@@ -7,12 +7,14 @@ import acceso.dam.proyectosql.util.R;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -79,7 +81,16 @@ public class InicioControlador {
                 loader.setController(controller);
                 VBox vbox = loader.load();
 
+                // Obtener las dimensiones de la pantalla
+                Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+
+                // Ajustar el tamaño del Stage para ocupar toda la pantalla sin fullscreen
+
                 Stage currentStage = (Stage) loginBtn.getScene().getWindow();
+                currentStage.setX(screenBounds.getMinX());
+                currentStage.setY(screenBounds.getMinY());
+                currentStage.setWidth(screenBounds.getWidth());
+                currentStage.setHeight(screenBounds.getHeight());
                 Scene scene = new Scene(vbox);
                 scene.getStylesheets().add(R.getEstilos("estilos.css").toExternalForm());
                 currentStage.setScene(scene);
