@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" prefHeight="802.0" prefWidth="1129.0" spacing="20.0" stylesheets="@../styles/estilos.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
+<VBox alignment="CENTER" prefHeight="802.0" prefWidth="1129.0" spacing="20.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
     <Label fx:id="labelUsuario" styleClass="texto-destacado" text="Conocimientos del Usuario">
         <VBox.margin>
             <Insets top="20.0" />
@@ -29,26 +29,27 @@
         <TextField fx:id="descripcionTextField" prefHeight="29.0" prefWidth="614.0" promptText="Descripción" styleClass="placeholder" />
         <ComboBox fx:id="cbEstado" prefHeight="29.0" prefWidth="172.0" promptText="Estado" styleClass="placeholder" />
     </HBox>
-   <HBox alignment="CENTER" prefHeight="69.0" prefWidth="1129.0" spacing="20.0">
-      <children>
-         <Label alignment="CENTER" contentDisplay="CENTER" text="Nombre, descripción o estado vacío." textAlignment="JUSTIFY" textFill="RED" visible="false">
+    <HBox alignment="CENTER" prefHeight="69.0" prefWidth="1129.0" spacing="20.0">
+        <padding>
+            <Insets bottom="20.0"/>
+        </padding>
+        <Label alignment="CENTER" contentDisplay="CENTER" text="Nombre, descripción o estado vacío."
+               textAlignment="JUSTIFY" textFill="RED" visible="false">
+           <font>
+               <Font name="Georgia Pro" size="16.0"/>
+           </font>
+        </Label>
+        <Button alignment="CENTER" contentDisplay="CENTER" onAction="#agregarConocimiento" styleClass="boton-destacado"
+                text="Añadir Conocimiento">
+         <HBox.margin>
+             <Insets/>
+         </HBox.margin>
+        </Button>
+        <Label fx:id="errorMsg" alignment="CENTER" contentDisplay="CENTER" text="Nombre, descripción o estado vacío."
+               textAlignment="JUSTIFY" textFill="RED" visible="false">
             <font>
-               <Font name="Georgia Pro" size="16.0" />
+                <Font name="Georgia Pro" size="16.0"/>
             </font>
-         </Label>
-           <Button alignment="CENTER" contentDisplay="CENTER" onAction="#agregarConocimiento" styleClass="boton-destacado" text="Añadir Conocimiento">
-            <HBox.margin>
-               <Insets />
-            </HBox.margin>
-         </Button>
-           <Label fx:id="errorMsg" alignment="CENTER" contentDisplay="CENTER" text="Nombre, descripción o estado vacío." textAlignment="JUSTIFY" textFill="RED" visible="false">
-             <font>
-                 <Font name="Georgia Pro" size="16.0" />
-             </font>
-           </Label>
-      </children>
-      <padding>
-         <Insets bottom="20.0" />
-      </padding>
-   </HBox>
+        </Label>
+    </HBox>
 </VBox>
