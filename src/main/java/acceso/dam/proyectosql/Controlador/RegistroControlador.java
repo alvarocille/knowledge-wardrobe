@@ -20,7 +20,12 @@ import static acceso.dam.proyectosql.util.AlertUtils.mostrarConfirmacion;
 import static acceso.dam.proyectosql.util.AlertUtils.mostrarError;
 import static acceso.dam.proyectosql.util.Utils.cambiarVisibilidad;
 
+/**
+ * La clase {@code RegistroControlador} gestiona la lógica de la interfaz de usuario
+ * en la ventana de registro de nuevos usuarios.
+ */
 public class RegistroControlador {
+    private final InicioControlador controladorInicio;
     @FXML
     private TextField tfUser, tfEmail, tfPasswordVisible, tfPasswordVisible2;
     @FXML
@@ -29,29 +34,25 @@ public class RegistroControlador {
     private ImageView eyeImageView, eyeImageView2;
     @FXML
     private Button registroBtn, passwordBtn, password2Btn;
-
-    Image icono;
-
-    private final InicioControlador controladorInicio;
+    private Image icono;
     private boolean passwordVisible = false;
     private boolean passwordVisible2 = false;
 
+    /**
+     * Constructor de la clase {@code RegistroControlador}.
+     *
+     * @param controladorInicio El controlador de la ventana de inicio de sesión.
+     * @param icono             El icono de la aplicación que se mostrará en la ventana.
+     */
     public RegistroControlador(InicioControlador controladorInicio, Image icono) {
         this.controladorInicio = controladorInicio;
         this.icono = icono;
-
-        try {
-            usuarioDAO.conectar();
-        } catch (SQLException sqle) {
-            mostrarError("Error al conectar con la base de datos");
-        } catch (ClassNotFoundException cnfe) {
-            mostrarError("Error al iniciar la aplicación");
-        } catch (IOException ioe) {
-            mostrarError("Error al cargar la configuración");
-        }
-        System.out.println(System.getProperty("user.home"));
     }
 
+    /**
+     * Inicializa el controlador, configurando las imágenes de los ojos y la visibilidad
+     * de los campos de contraseña.
+     */
     @FXML
     public void initialize() {
         Image ojoCerrado = new Image(Objects.requireNonNull(R.getImage("ojoCerrado.png")));
@@ -63,16 +64,28 @@ public class RegistroControlador {
         tfPasswordVisible2.setVisible(false);
     }
 
+    /**
+     * Alterna la visibilidad de la contraseña en el primer campo de entrada.
+     */
     @FXML
     public void verPassword() {
         passwordVisible = cambiarVisibilidad(tfPasswordVisible, tfPassword, eyeImageView, passwordVisible);
     }
 
+    /**
+     * Alterna la visibilidad de la contraseña en el segundo campo de entrada.
+     */
     @FXML
     public void verPassword2() {
         passwordVisible2 = cambiarVisibilidad(tfPasswordVisible2, tfConfirmPassword, eyeImageView2, passwordVisible2);
     }
 
+    /**
+     * Maneja el registro de un nuevo usuario. Valida los campos de entrada y, si son correctos,
+     * inserta el nuevo usuario en la base de datos.
+     *
+     * @throws SQLException si hay un error al realizar la inserción en la base de datos.
+     */
     @FXML
     public void registrarUsuario() throws SQLException {
         boolean registroCorrecto = true;
@@ -101,6 +114,9 @@ public class RegistroControlador {
         }
     }
 
+    /**
+     * Limpia los campos de entrada de usuario, email y contraseñas.
+     */
     private void limpiarCampos() {
         tfUser.clear();
         tfEmail.clear();
@@ -109,5 +125,4 @@ public class RegistroControlador {
         tfPasswordVisible.clear();
         tfPasswordVisible2.clear();
     }
-
 }

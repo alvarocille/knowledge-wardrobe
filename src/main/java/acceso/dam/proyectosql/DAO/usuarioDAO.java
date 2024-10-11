@@ -7,36 +7,23 @@ import java.io.IOException;
 import java.sql.*;
 import java.util.Properties;
 
+import static acceso.dam.proyectosql.util.DBManager.getConnection;
+
+/**
+ * La clase {@code usuarioDAO} proporciona métodos para interactuar con la base de datos
+ * relacionada con los objetos de tipo {@code Usuario}.
+ */
 public class usuarioDAO {
     private static Connection conexion;
 
-    public static void conectar() throws ClassNotFoundException, SQLException, IOException {
-        Properties configuration = new Properties();
-        String host = "", port = "", name = "", username = "", password = "";
-        try {
-            configuration.load(R.getProperties("database.properties"));
-            host = configuration.getProperty("host");
-            port = configuration.getProperty("port");
-            name = configuration.getProperty("name");
-            username = configuration.getProperty("username");
-            password = configuration.getProperty("password");
-        } catch (Exception e) {
-            System.out.println("Error al cargar los datos de conexión:" + e);
-        }
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            conexion = DriverManager.getConnection("jdbc:mysql://" + host + ":" + port + "/" + name + "?serverTimezone=UTC",
-                    username, password);
-        } catch (Exception e) {
-            System.out.println("Error al conectar con la base de datos:" + e);
-        }
-    }
-
-    public void desconectar() throws SQLException {
-        conexion.close();
-    }
-
+    /**
+     * Inserta un nuevo usuario en la base de datos.
+     *
+     * @param usuario El objeto {@code Usuario} que se desea insertar.
+     * @throws SQLException si hay un error al realizar la operación de inserción.
+     */
     public static void insertarUsuario(Usuario usuario) throws SQLException {
+        conexion = getConnection();
         String sql = "INSERT INTO usuario (nombre, password, email) VALUES (?, ?, ?)";
 
         PreparedStatement sentencia = conexion.prepareStatement(sql);
@@ -46,7 +33,16 @@ public class usuarioDAO {
         sentencia.executeUpdate();
     }
 
+    /**
+     * Busca un usuario en la base de datos por nombre y contraseña.
+     *
+     * @param nombre   El nombre del usuario a buscar.
+     * @param password La contraseña del usuario a buscar.
+     * @return Un objeto {@code Usuario} si se encuentra, {@code null} en caso contrario.
+     * @throws SQLException si hay un error al realizar la consulta.
+     */
     public static Usuario buscarUsuario(String nombre, String password) throws SQLException {
+        conexion = getConnection();
         String sql = "SELECT * FROM usuario WHERE nombre = ? AND password = ?";
         PreparedStatement sentencia = conexion.prepareStatement(sql);
         sentencia.setString(1, nombre);
@@ -65,8 +61,5 @@ public class usuarioDAO {
             return null;
         }
     }
-
-
-
 
 }

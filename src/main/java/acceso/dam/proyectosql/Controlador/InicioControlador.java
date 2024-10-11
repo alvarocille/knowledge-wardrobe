@@ -9,7 +9,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
@@ -24,6 +27,10 @@ import java.util.Objects;
 import static acceso.dam.proyectosql.DAO.usuarioDAO.buscarUsuario;
 import static acceso.dam.proyectosql.util.Utils.cambiarVisibilidad;
 
+/**
+ * La clase {@code InicioControlador} gestiona la lógica de la interfaz de usuario
+ * en la ventana de inicio de sesión de la aplicación.
+ */
 public class InicioControlador {
     @FXML
     private TextField tfUser;
@@ -41,20 +48,18 @@ public class InicioControlador {
     private Image icono;
     private boolean passwordVisible = false;
 
+    /**
+     * Constructor de la clase {@code InicioControlador}.
+     *
+     * @param icono El icono de la aplicación que se mostrará en la ventana.
+     */
     public InicioControlador(Image icono) {
         this.icono = icono;
-        try {
-            usuarioDAO.conectar();
-        } catch (SQLException sqle) {
-            AlertUtils.mostrarError("Error al conectar con la base de datos");
-        } catch (ClassNotFoundException cnfe) {
-            AlertUtils.mostrarError("Error al iniciar la aplicación");
-        } catch (IOException ioe) {
-            AlertUtils.mostrarError("Error al cargar la configuración");
-        }
-        System.out.println(System.getProperty("user.home"));
     }
 
+    /**
+     * Inicializa el controlador, configurando la imagen del ojo y la visibilidad de los campos de contraseña.
+     */
     @FXML
     public void initialize() {
         Image ojoCerrado = new Image(Objects.requireNonNull(R.getImage("ojoCerrado.png")));
@@ -63,6 +68,13 @@ public class InicioControlador {
         tfPasswordVisible.setVisible(false);
     }
 
+    /**
+     * Maneja el evento de inicio de sesión. Intenta autenticar al usuario y redirige a la interfaz correspondiente
+     * si el inicio de sesión es exitoso.
+     *
+     * @param event El evento de acción.
+     * @throws SQLException si hay un error al realizar la consulta de usuario.
+     */
     @FXML
     protected void iniciarSesion(ActionEvent event) throws SQLException {
         if (tfPasswordVisible.isVisible()) {
@@ -85,7 +97,6 @@ public class InicioControlador {
                 Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
 
                 // Ajustar el tamaño del Stage para ocupar toda la pantalla sin fullscreen
-
                 Stage currentStage = (Stage) loginBtn.getScene().getWindow();
                 currentStage.setX(screenBounds.getMinX());
                 currentStage.setY(screenBounds.getMinY());
@@ -104,6 +115,11 @@ public class InicioControlador {
         }
     }
 
+    /**
+     * Abre la ventana de registro para permitir a un nuevo usuario crear una cuenta.
+     *
+     * @param event El evento de acción.
+     */
     @FXML
     protected void abrirRegistro(ActionEvent event) {
         try {
@@ -121,12 +137,14 @@ public class InicioControlador {
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.showAndWait();
 
-
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
     }
 
+    /**
+     * Limpia los campos de entrada de usuario y contraseña.
+     */
     @FXML
     public void limpiarCampos() {
         tfUser.clear();
@@ -134,14 +152,20 @@ public class InicioControlador {
         tfPasswordVisible.clear();
     }
 
+    /**
+     * Alterna la visibilidad de la contraseña en el campo de entrada correspondiente.
+     */
     @FXML
     protected void verPassword() {
         passwordVisible = cambiarVisibilidad(tfPasswordVisible, tfPassword, eyeImageView, passwordVisible);
     }
 
+    /**
+     * Completa automáticamente el campo de nombre de usuario con el nombre proporcionado.
+     *
+     * @param nombreUsuario El nombre de usuario a autocompletar.
+     */
     public void autocompletarUsuario(String nombreUsuario) {
         tfUser.setText(nombreUsuario);
     }
-
-
 }

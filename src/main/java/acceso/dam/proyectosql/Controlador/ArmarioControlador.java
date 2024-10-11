@@ -1,10 +1,8 @@
 package acceso.dam.proyectosql.Controlador;
 
-import acceso.dam.proyectosql.DAO.conocimientoDAO;
 import acceso.dam.proyectosql.domain.Conocimiento;
 import acceso.dam.proyectosql.util.R;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -20,9 +18,15 @@ import java.util.Objects;
 import static acceso.dam.proyectosql.DAO.conocimientoDAO.addConocimiento;
 import static acceso.dam.proyectosql.DAO.conocimientoDAO.cargarConocimiento;
 
+/**
+ * La clase {@code ArmarioControlador} gestiona la lógica de la UI
+ * en la ventana que muestra los conocimientos del usuario.
+ */
 public class ArmarioControlador {
     @FXML
     public TableView<Conocimiento> tvConocimientos;
+    public int idUsuario;
+    public String nombreUsuario;
     @FXML
     private TableColumn<Conocimiento, String> colNombre;
     @FXML
@@ -38,17 +42,24 @@ public class ArmarioControlador {
     @FXML
     private Label labelUsuario, errorMsg;
 
-    public int idUsuario;
-    public String nombreUsuario;
-
+    /**
+     * Inicializa el controlador, configura las columnas de la tabla y carga los datos.
+     *
+     * @throws SQLException           si hay un error al acceder a la base de datos.
+     * @throws IOException            si hay un error al cargar los recursos.
+     * @throws ClassNotFoundException si no se encuentra la clase requerida.
+     */
     @FXML
-    public void initialize() throws SQLException, IOException, ClassNotFoundException {
+    public void initialize() {
         labelUsuario.setText("Conocimientos de " + nombreUsuario);
         configurarColumnas();
         cargarDatos();
         cbEstado.setItems(FXCollections.observableArrayList("Aprendiendo...", "Principiante", "Dominado"));
     }
 
+    /**
+     * Configura las columnas de la tabla de conocimientos estableciendo un icono en función del campo estado.
+     */
     @FXML
     private void configurarColumnas() {
         colNombre.prefWidthProperty().bind(tvConocimientos.widthProperty().multiply(0.3));
@@ -91,6 +102,14 @@ public class ArmarioControlador {
         });
     }
 
+    /**
+     * Agrega un nuevo conocimiento a la base de datos. Valida los campos de entrada
+     * y, si son correctos, inserta el nuevo conocimiento.
+     *
+     * @throws SQLException           si hay un error al realizar la inserción en la base de datos.
+     * @throws IOException            si hay un error al cargar los recursos.
+     * @throws ClassNotFoundException si no se encuentra la clase requerida.
+     */
     @FXML
     public void agregarConocimiento() throws SQLException, IOException, ClassNotFoundException {
         String nombre = nombreTextField.getText();
@@ -109,6 +128,11 @@ public class ArmarioControlador {
         }
     }
 
+    /**
+     * Obtiene el estado seleccionado en el ComboBox y lo convierte en un valor entero.
+     *
+     * @return el estado correspondiente como un entero.
+     */
     private int getEstadoCB() {
         String estadoStr = null;
         if (cbEstado.getValue() != null) {
@@ -116,21 +140,20 @@ public class ArmarioControlador {
         }
         int estado = 0;
         switch (estadoStr) {
-            case "Aprendiendo..." -> {
-                estado = 1;
+            case "Aprendiendo..." -> estado = 1;
+            case "Principiante" -> estado = 2;
+            case "Dominado" -> estado = 3;
+            case null -> {
             }
-            case "Principiante" -> {
-                estado = 2;
-            }
-            case "Dominado" -> {
-                estado = 3;
-            }
-            case null -> {}
             default -> throw new IllegalStateException("Unexpected value: " + estadoStr);
         }
         return estado;
     }
 
+    /**
+     * Carga los datos de los conocimientos del usuario desde la base de datos
+     * y los muestra en la tabla.
+     */
     public void cargarDatos() {
         tvConocimientos.getItems().clear();
         try {
@@ -141,6 +164,12 @@ public class ArmarioControlador {
         }
     }
 
+    /**
+     * Establece el usuario para el controlador.
+     *
+     * @param nombreUsuario el nombre del usuario.
+     * @param idUsuario     el ID del usuario.
+     */
     public void setUsuario(String nombreUsuario, int idUsuario) {
         this.nombreUsuario = nombreUsuario;
         this.idUsuario = idUsuario;

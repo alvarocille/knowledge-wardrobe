@@ -1,33 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.PasswordField?>
-<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
-
-<VBox alignment="CENTER" prefHeight="350.0" prefWidth="555.0" spacing="20.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
-   <padding>
-      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-   </padding>
-   <AnchorPane prefHeight="326.0" prefWidth="604.0">
-      <Label fx:id="notFound" layoutX="137.0" layoutY="6.0" text="Usuario o contraseña incorrectos" textFill="RED" visible="false" />
-      <Label layoutX="82.0" layoutY="48.0" styleClass="texto-destacado" text="Usuario" />
-      <TextField fx:id="tfUser" layoutX="203.0" layoutY="45.0" prefHeight="31.0" prefWidth="227.0" promptText="usuario" styleClass="placeholder" />
-      <Label layoutX="43.0" layoutY="114.0" styleClass="texto-destacado" text="Contraseña" />
-      <TextField fx:id="tfPasswordVisible" layoutX="203.0" layoutY="111.0" prefHeight="31.0" prefWidth="227.0" promptText="password" styleClass="placeholder" visible="false" />
-      <PasswordField fx:id="tfPassword" layoutX="203.0" layoutY="111.0" prefHeight="31.0" prefWidth="227.0" promptText="*******" styleClass="placeholder" />
-      <Button fx:id="passwordBtn" layoutX="441.0" layoutY="107.0" onAction="#verPassword" prefHeight="31.0" prefWidth="28.0">
-         <graphic>
-            <ImageView fx:id="eyeImageView" fitHeight="31.0" fitWidth="34.0" layoutX="444.0" layoutY="114.0" pickOnBounds="true" preserveRatio="true" />
-         </graphic>
-      </Button>
-      <Button fx:id="loginBtn" layoutX="128.0" layoutY="167.0" mnemonicParsing="false" onAction="#iniciarSesion" styleClass="boton-destacado" text="INICIAR SESIÓN" />
-      <Button fx:id="cleanBtn" layoutX="341.0" layoutY="172.0" mnemonicParsing="false" onAction="#limpiarCampos" prefHeight="24.0" prefWidth="75.0" styleClass="fuente-base" text="Limpiar" />
-      <Label layoutX="55.0" layoutY="249.0" styleClass="texto-destacado" text="¿No estás registrado?" />
-      <Button fx:id="registroBtn" layoutX="309.0" layoutY="242.0" mnemonicParsing="false" onAction="#abrirRegistro" prefWidth="162.0" styleClass="boton-destacado" text="REGISTRO" />
-   </AnchorPane>
+<VBox xmlns:fx="http://javafx.com/fxml/1" alignment="CENTER" prefHeight="350.0" prefWidth="555.0" spacing="20.0"
+      xmlns="http://javafx.com/javafx/22">
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+    </padding>
+    <AnchorPane prefHeight="326.0" prefWidth="604.0">
+        <Label fx:id="notFound" layoutX="137.0" layoutY="6.0" text="Usuario o contraseña incorrectos" textFill="RED"
+               visible="false"/>
+        <Label layoutX="82.0" layoutY="48.0" styleClass="texto-destacado" text="Usuario"/>
+        <TextField fx:id="tfUser" layoutX="203.0" layoutY="45.0" prefHeight="31.0" prefWidth="227.0"
+                   promptText="usuario" styleClass="placeholder"/>
+        <Label layoutX="43.0" layoutY="114.0" styleClass="texto-destacado" text="Contraseña"/>
+        <TextField fx:id="tfPasswordVisible" layoutX="203.0" layoutY="111.0" prefHeight="31.0" prefWidth="227.0"
+                   promptText="password" styleClass="placeholder" visible="false"/>
+        <PasswordField fx:id="tfPassword" layoutX="203.0" layoutY="111.0" prefHeight="31.0" prefWidth="227.0"
+                       promptText="*******" styleClass="placeholder"/>
+        <Button fx:id="passwordBtn" layoutX="441.0" layoutY="107.0" onAction="#verPassword" prefHeight="31.0"
+                prefWidth="28.0">
+            <graphic>
+                <ImageView fx:id="eyeImageView" fitHeight="31.0" fitWidth="34.0" layoutX="444.0" layoutY="114.0"
+                           pickOnBounds="true" preserveRatio="true"/>
+            </graphic>
+        </Button>
+        <Button fx:id="loginBtn" layoutX="128.0" layoutY="167.0" mnemonicParsing="false" onAction="#iniciarSesion"
+                styleClass="boton-destacado" text="INICIAR SESIÓN"/>
+        <Button fx:id="cleanBtn" layoutX="341.0" layoutY="172.0" mnemonicParsing="false" onAction="#limpiarCampos"
+                prefHeight="24.0" prefWidth="75.0" styleClass="fuente-base" text="Limpiar"/>
+        <Label layoutX="55.0" layoutY="249.0" styleClass="texto-destacado" text="¿No estás registrado?"/>
+        <Button fx:id="registroBtn" layoutX="309.0" layoutY="242.0" mnemonicParsing="false" onAction="#abrirRegistro"
+                prefWidth="162.0" styleClass="boton-destacado" text="REGISTRO"/>
+    </AnchorPane>
 </VBox>

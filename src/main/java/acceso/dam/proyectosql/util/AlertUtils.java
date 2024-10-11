@@ -7,16 +7,16 @@ import javafx.scene.image.ImageView;
 
 import java.util.Objects;
 
+/**
+ * La clase {@code AlertUtils} proporciona métodos estáticos para mostrar diferentes tipos de alertas en la aplicación.
+ */
 public class AlertUtils {
 
-    public static void mostrarAviso(String mensaje) {
-        Alert alerta = new Alert(Alert.AlertType.INFORMATION);
-        alerta.setTitle("Aviso.");
-        alerta.setHeaderText(null);
-        alerta.setContentText(mensaje);
-        alerta.show();
-    }
-
+    /**
+     * Muestra una alerta de error con el mensaje proporcionado.
+     *
+     * @param mensaje el mensaje de error que se mostrará en la alerta.
+     */
     public static void mostrarError(String mensaje) {
         Alert alerta = new Alert(Alert.AlertType.ERROR);
         alerta.setTitle("Error.");
@@ -25,6 +25,11 @@ public class AlertUtils {
         alerta.show();
     }
 
+    /**
+     * Muestra una alerta de confirmación con el mensaje proporcionado.
+     *
+     * @param mensaje el mensaje de confirmación que se mostrará en la alerta.
+     */
     public static void mostrarConfirmacion(String mensaje) {
         Alert alerta = new Alert(Alert.AlertType.INFORMATION);
         alerta.setTitle("Confirmación.");
@@ -47,4 +52,12 @@ public class AlertUtils {
 
         alerta.show();
     }
+
+/*    public static void mostrarAviso(String mensaje) {
+        Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+        alerta.setTitle("Aviso.");
+        alerta.setHeaderText(null);
+        alerta.setContentText(mensaje);
+        alerta.show();
+    }*/
 }
