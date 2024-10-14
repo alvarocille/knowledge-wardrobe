@@ -1,11 +1,9 @@
 package acceso.dam.proyectosql.DAO;
 
 import acceso.dam.proyectosql.domain.Usuario;
-import acceso.dam.proyectosql.util.R;
+import org.apache.commons.codec.digest.DigestUtils;
 
-import java.io.IOException;
 import java.sql.*;
-import java.util.Properties;
 
 import static acceso.dam.proyectosql.util.DBManager.getConnection;
 
@@ -28,7 +26,7 @@ public class usuarioDAO {
 
         PreparedStatement sentencia = conexion.prepareStatement(sql);
         sentencia.setString(1, usuario.getNombre());
-        sentencia.setString(2, usuario.getPassword());
+        sentencia.setString(2,  DigestUtils.sha256Hex(usuario.getPassword()));
         sentencia.setString(3, usuario.getEmail());
         sentencia.executeUpdate();
     }
@@ -46,7 +44,7 @@ public class usuarioDAO {
         String sql = "SELECT * FROM usuario WHERE nombre = ? AND password = ?";
         PreparedStatement sentencia = conexion.prepareStatement(sql);
         sentencia.setString(1, nombre);
-        sentencia.setString(2, password);
+        sentencia.setString(2, DigestUtils.sha256Hex(password));
 
         ResultSet resultado = sentencia.executeQuery();
 

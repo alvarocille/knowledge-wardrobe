@@ -8,7 +8,7 @@ import java.util.Properties;
 
 /**
  * La clase <code>DBManager</code> gestiona la conexión a la base de datos.
- * Se asegura de que solo exista una conexión a la base de datos en todo momento,
+ * Se asegura de que solo exista una conexión a la base de datos en cualquier momento,
  * proporcionando métodos para obtener y cerrar la conexión.
  * El constructor de esta clase es privado para evitar que se instancie,
  * ya que todos los métodos son estáticos.
@@ -25,7 +25,6 @@ public class DBManager {
 
     /**
      * Obtiene la conexión a la base de datos.
-     *
      * Si la conexión actual es nula o está cerrada, intenta establecer una nueva conexión
      * utilizando las propiedades definidas en el archivo <code>database.properties</code>.
      *
